@@ -24,6 +24,7 @@ namespace LevelReader.GameFrameWork
         private int _tileHeight;
         private string _orientation;
         private Color _backgroundcolor;
+        private int _tileSetSpacing;
 
         #endregion
 
@@ -50,6 +51,11 @@ namespace LevelReader.GameFrameWork
         public Color BackgroundColor
         {
             get { return _backgroundcolor; }
+        }
+
+        public int TileSetSpacing
+        {
+            get { return _tileSetSpacing; }
         }
 
         #endregion
@@ -83,11 +89,16 @@ namespace LevelReader.GameFrameWork
                                 Convert.ToInt32(backgroundColor.Substring(5, 2), 16));
                             }
 
+                        if (reader.Name == "tileset")
+                        {
+                            _tileSetSpacing = Convert.ToInt32(reader.GetAttribute("spcaing"));
+                        }
+
                         if (reader.Name == "layer")
                         {
                             string name = reader.GetAttribute("name");
                             _layerNames.Add(name);
-                            _layers.Add(name, new int[Width, Height]);
+                            _layers.Add(name, new int[Height, Width]);
                         }
 
                         if (reader.Name == "tile")
@@ -100,9 +111,9 @@ namespace LevelReader.GameFrameWork
                         if (tempTileValue.Count == _width*_height)
                         {
                             // add layer tiles from temporary list to layer
-                            for (int i = 0; i < _width; i++)
+                            for (int i = 0; i < _height; i++)
                             {
-                                for (int j = 0; j < _height; j++)
+                                for (int j = 0; j < _width; j++)
                                 {
                                     int[,] layer = _layers[_layerNames[_layerNames.Count-1]];
                                     layer[i, j] = tempTileValue.Dequeue();
@@ -120,8 +131,8 @@ namespace LevelReader.GameFrameWork
                 throw new FormatException("Tmx level has wrong format - did you use xml as output in the editor?");
             }
         }
-
-       
         #endregion
+
+
     }
 }

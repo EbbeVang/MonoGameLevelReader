@@ -3,6 +3,7 @@ using System.Xml;
 using LevelReader.GameFrameWork;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace LevelReader
 {
@@ -18,10 +19,16 @@ namespace LevelReader
         private TiledMap _level;
         private bool _levelLoaded = false;
         private string _levelInfo;
+        private SpriteFont _font;
+        private MapObject _mapObject;
+        private KeyboardState _keyboardState;
+
         public LevelReaderTestGame()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
+
         }
 
         /// <summary>
@@ -48,9 +55,15 @@ namespace LevelReader
 
             // TODO: use this.Content to load your game content here
              _tiles = Content.Load<Texture2D>("tiles_spritesheet");
-          
-            _level = new TiledMap("Levels/levelTesttt.tmx");
 
+            _font = Content.Load<SpriteFont>("MonoLog");
+
+            _level = new TiledMap("Levels/levelTest.tmx");
+
+            
+            _mapObject = new MapObject(this, new Vector2(0,0), _tiles, _level, _font);
+            //_mapObject.Scale = new Vector2(2,2);
+            GameObjects.Add(_mapObject);
 
 
         }
@@ -71,10 +84,25 @@ namespace LevelReader
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            // TODO: Add your update logic here
+            // The map can be moved with the position Property...
+            // future improvemnts.... only draw visible tiles!
+            _keyboardState = Keyboard.GetState();
+            if (_keyboardState.IsKeyDown(Keys.Left)) _mapObject.PositionX+=4;
+            if (_keyboardState.IsKeyDown(Keys.Right)) _mapObject.PositionX -= 4;
+            if (_keyboardState.IsKeyDown(Keys.Up)) _mapObject.PositionY -= 4;
+            if (_keyboardState.IsKeyDown(Keys.Down)) _mapObject.PositionY += 4;
+
+            if (_keyboardState.IsKeyDown(Keys.Left) && _keyboardState.IsKeyDown(Keys.RightControl))
+                _mapObject.PositionX = 0;
+
+            if (_keyboardState.IsKeyDown(Keys.Up) && _keyboardState.IsKeyDown(Keys.RightControl))
+                _mapObject.PositionY = 0;
+
 
             base.Update(gameTime);
         }
+
+        
 
         /// <summary>
         /// This is called when the game should draw itself.
@@ -82,17 +110,17 @@ namespace LevelReader
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
+            GraphicsDevice.Clear(Color.Green);
+            
+            _spriteBatch.Begin();
+            foreach (SpriteObject so in GameObjects)
+            {
+               // my MapObject is added to the list of GameObjects
+               so.Draw(gameTime, _spriteBatch);
+            }
 
+            _spriteBatch.End();
 
-            if (_level.Layers["Tile Layer 1"][29,7] == 44)
-                {
-                    GraphicsDevice.Clear(Color.Green);
-                }
-                else
-                {
-                    GraphicsDevice.Clear(Color.Red);
-                }
-          
             // TODO: Add your drawing code here
 
             base.Draw(gameTime);

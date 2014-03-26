@@ -135,6 +135,7 @@
     <Compile Include="GameFrameWork\GameHelper.cs" />
     <Compile Include="GameFrameWork\GameHost.cs" />
     <Compile Include="GameFrameWork\GameObjectBase.cs" />
+    <Compile Include="GameFrameWork\MapObject.cs" />
     <Compile Include="GameFrameWork\MonoLog.cs" />
     <Compile Include="GameFrameWork\SpriteObject.cs" />
     <Compile Include="GameFrameWork\TextObject.cs" />
@@ -156,6 +157,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\tiles_spritesheet.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\MonoLog.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="LevelReader_TemporaryKey.pfx" />
