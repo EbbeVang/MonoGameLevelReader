@@ -49,7 +49,7 @@ namespace LevelReader
             // TODO: use this.Content to load your game content here
              _tiles = Content.Load<Texture2D>("tiles_spritesheet");
           
-            _level = new TiledMap("Levels/levelTest.tmx");
+            _level = new TiledMap("Levels/levelTesttt.tmx");
 
 
 
@@ -82,9 +82,9 @@ namespace LevelReader
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-           
-            
-                if (_level.Width == 30)
+
+
+            if (_level.Layers["Tile Layer 1"][29,7] == 44)
                 {
                     GraphicsDevice.Clear(Color.Green);
                 }
