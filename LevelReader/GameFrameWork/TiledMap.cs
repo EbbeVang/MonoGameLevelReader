@@ -1,14 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Xml;
-using Windows.ApplicationModel;
-using Windows.Data.Xml.Dom;
-using Windows.Storage;
 using Microsoft.Xna.Framework;
-using SharpDX.Direct2D1.Effects;
 
 namespace LevelReader.GameFrameWork
 {
@@ -25,6 +19,7 @@ namespace LevelReader.GameFrameWork
         private string _orientation;
         private Color _backgroundcolor;
         private int _tileSetSpacing;
+        private int _imageWidth;
 
         #endregion
 
@@ -58,6 +53,11 @@ namespace LevelReader.GameFrameWork
             get { return _tileSetSpacing; }
         }
 
+        public int ImageWidth
+        {
+            get { return _imageWidth; }
+        }
+
         #endregion
 
         #region Constructor
@@ -83,6 +83,7 @@ namespace LevelReader.GameFrameWork
                             _tileWidth = Convert.ToInt32(reader.GetAttribute("tilewidth"));
                             _tileHeight = Convert.ToInt32(reader.GetAttribute("tileheight"));
                             string backgroundColor = reader.GetAttribute("backgroundcolor");
+                            if (backgroundColor != null)
                             _backgroundcolor = new Color(
                                 Convert.ToInt32(backgroundColor.Substring(1, 2), 16),
                                 Convert.ToInt32(backgroundColor.Substring(3, 2), 16),
@@ -91,7 +92,12 @@ namespace LevelReader.GameFrameWork
 
                         if (reader.Name == "tileset")
                         {
-                            _tileSetSpacing = Convert.ToInt32(reader.GetAttribute("spcaing"));
+                            _tileSetSpacing = Convert.ToInt32(reader.GetAttribute("spacing"));
+                        }
+
+                        if (reader.Name == "image")
+                        {
+                            _imageWidth = Convert.ToInt32(reader.GetAttribute("width"));
                         }
 
                         if (reader.Name == "layer")
@@ -108,7 +114,7 @@ namespace LevelReader.GameFrameWork
                         }
 
                         // if temp list holds full layer
-                        if (tempTileValue.Count == _width*_height)
+                        if (tempTileValue.Count == _width * _height)
                         {
                             // add layer tiles from temporary list to layer
                             for (int i = 0; i < _height; i++)
@@ -128,7 +134,8 @@ namespace LevelReader.GameFrameWork
             }
             catch (Exception )
             {
-                throw new FormatException("Tmx level has wrong format - did you use xml as output in the editor?");
+                throw;
+                //throw new FormatException("Tmx level has wrong format - did you use xml as output in the editor?");
             }
         }
         #endregion

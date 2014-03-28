@@ -975,8 +975,8 @@
  </layer>
  <layer name="Tile Layer 2" width="120" height="8" visible="0">
   <data>
-   <tile gid="1"/>
-   <tile gid="2"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
