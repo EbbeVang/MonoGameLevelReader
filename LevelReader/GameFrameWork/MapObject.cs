@@ -70,21 +70,21 @@ namespace LevelReader.GameFrameWork
             }
 
             // used to print the tiles numbers (debugging...)
-            for (int i = 0; i < _tiledMap.Width; i++)
-            {
-                for (int j = 0; j < _tiledMap.Height; j++)
-                {
+            //for (int i = 0; i < _tiledMap.Width; i++)
+            //{
+            //    for (int j = 0; j < _tiledMap.Height; j++)
+            //    {
 
-                    int gidValue = _tiledMap.Layers[_tiledMap.LayerNames[0]][j, i];
+            //        int gidValue = _tiledMap.Layers[_tiledMap.LayerNames[0]][j, i];
 
-                    int x = (gidValue % 12 - 1) * 72;
-                    int y = (int)((gidValue - 1) / 12) * 72;
+            //        int x = (gidValue % 12 - 1) * 72;
+            //        int y = (int)((gidValue - 1) / 12) * 72;
 
-                    spriteBatch.DrawString(_font, gidValue.ToString(), new Vector2(i * 70, j * 70), Color.White);
-                    spriteBatch.DrawString(_font, "{" + x + ";" + y + "}", new Vector2(70 * i, 70 * j + 20), Color.Orange);
+            //        spriteBatch.DrawString(_font, gidValue.ToString(), new Vector2(i * 70, j * 70), Color.White);
+            //        spriteBatch.DrawString(_font, "{" + x + ";" + y + "}", new Vector2(70 * i, 70 * j + 20), Color.Orange);
 
-                }
-            }
+            //    }
+            //}
         }
     }
 }
